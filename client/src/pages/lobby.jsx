@@ -15,12 +15,14 @@ const Lobby = () => {
   const submitHandle = useCallback((e) => {
     e.preventDefault();
     socket.emit("room:join", { email, room });
+    console.log("rendered");
 
     navigate(`/room/${room}`);
   }, [email, room, socket, navigate])
 
   const handleJoinRoom = useCallback((data) => {
     const { email, room } = data;
+    console.log(data);
     console.log(email, room);
   }, [])
 
@@ -29,7 +31,7 @@ const Lobby = () => {
     return () => {
       socket.off('room:join', handleJoinRoom);
     }
-  }, [socket], handleJoinRoom)
+  }, [socket, handleJoinRoom])
 
 
   return (
@@ -42,7 +44,6 @@ const Lobby = () => {
 
           <form onSubmit={submitHandle} className="space-y-5">
             {/* Email */}
-            <div>
               <label htmlFor="email" className="block text-gray-300 mb-1 font-medium">
                 Email ID
               </label>
@@ -52,14 +53,13 @@ const Lobby = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 
-              text-white placeholder-gray-400 focus:outline-none focus:ring-2 
-              focus:ring-[#06b6d4] transition"
+                required
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border-white/10 
+              text-white placeholder-gray-400 "
               />
-            </div>
+            
 
             {/* Room Number */}
-            <div>
               <label htmlFor="roomnum" className="block text-gray-300 mb-1 font-medium">
                 Room Number
               </label>
@@ -69,11 +69,10 @@ const Lobby = () => {
                 value={room}
                 onChange={(e) => setRoom(e.target.value)}
                 placeholder="Enter room number"
+                required
                 className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 
-              text-white placeholder-gray-400 focus:outline-none focus:ring-2 
-              focus:ring-[#9333ea] transition"
+              text-white"
               />
-            </div>
 
             {/* Submit Button */}
             <button
@@ -89,5 +88,6 @@ const Lobby = () => {
     </>
   )
 }
+
 
 export default Lobby

@@ -9,7 +9,7 @@ const Room = lazy(() => import("../pages/Room.jsx"))
 const AllRoutes = () => {
   return (
     <Routes>
-      <Route path="/lobby" element={<Lobby />} />
+      <Route path="/" element={<Lobby />} />
       <Route path="/room/:roomId" element={<Room />} />
     </Routes>
   )
